@@ -14,7 +14,7 @@ import {
   deleteConversation,
 } from '@/lib/storage';
 import { useRouter } from 'next/navigation';
-import { Bars3Icon, XMarkIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline';
 
 export function Chat() {
   const [state, setState] = useState<ChatState>({
@@ -28,7 +28,6 @@ export function Chat() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-  const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL || 'admin@devriazul.com';
   const [showSidebarMobile, setShowSidebarMobile] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
