@@ -135,7 +135,11 @@ export function ChatMessage({ message, isLastMessage }: ChatMessageProps) {
         {isUser ? (
           <UserCircleIcon className="h-6 w-6 text-white" />
         ) : (
-          <div className="h-6 w-6 rounded-full bg-gradient-to-r from-purple-500 to-pink-500" />
+          <img
+            src="/devriazul-profile.jpg"
+            alt="DevRiazul Profile Icon"
+            className="h-full w-full rounded-full object-cover"
+          />
         )}
       </motion.div>
 
@@ -150,7 +154,7 @@ export function ChatMessage({ message, isLastMessage }: ChatMessageProps) {
               isUser ? "text-blue-600" : "text-purple-600"
             )}
           >
-            {isUser ? 'You' : 'Assistant'}
+            {isUser ? 'You' : 'Devriazul Ai'}
           </motion.p>
           <div className="flex items-center gap-2 min-w-fit">
             <motion.p
