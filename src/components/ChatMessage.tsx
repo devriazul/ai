@@ -56,7 +56,7 @@ export function ChatMessage({ message, isLastMessage }: ChatMessageProps) {
               <SyntaxHighlighter
                 key={i}
                 language={language}
-                style={vscDarkPlus as any}
+                style={vscDarkPlus}
                 customStyle={{
                   margin: '1em 0',
                   borderRadius: '0.5rem',
