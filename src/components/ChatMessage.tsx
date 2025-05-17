@@ -42,13 +42,13 @@ export function ChatMessage({ message, isLastMessage }: ChatMessageProps) {
     // Simple markdown-like formatting
     const formattedContent = content
       .split('\n')
-      .map((line, i) => {
+      .map((line: string, i: number) => {
         // Handle code blocks
         if (line.startsWith('```')) {
           const language = line.slice(3).trim();
           const codeBlock = content
             .split('```')
-            .find((block, index) => index % 2 === 1 && block.startsWith(language));
+            .find((block: string, index: number) => index % 2 === 1 && block.startsWith(language));
           
           if (codeBlock) {
             const code = codeBlock.slice(language.length).trim();
