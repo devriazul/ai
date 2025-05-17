@@ -13,6 +13,7 @@ import {
   updateConversation,
   deleteConversation,
 } from '@/lib/storage';
+import { useRouter } from 'next/navigation';
 
 export function Chat() {
   const [state, setState] = useState<ChatState>({
@@ -25,6 +26,8 @@ export function Chat() {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+  const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL || 'admin@devriazul.com';
 
   useEffect(() => {
     if (!isInitialized) {
@@ -153,6 +156,11 @@ export function Chat() {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn');
+    router.replace('/login');
+  };
+
   if (!isInitialized) {
     return (
       <div className="flex h-[calc(100vh-73px)] items-center justify-center">
@@ -179,6 +187,17 @@ export function Chat() {
       />
 
       <div className="flex flex-1 flex-col">
+        <div className="flex items-center justify-end gap-4 px-6 py-4 border-b border-gray-200 bg-white">
+          <div className="flex items-center gap-2">
+            <span className="rounded-full bg-gradient-to-br from-purple-500 to-pink-500 px-3 py-1 text-sm font-semibold text-white shadow">{adminEmail}</span>
+          </div>
+          <button
+            onClick={handleLogout}
+            className="rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-semibold text-gray-700 hover:bg-gray-200 hover:text-red-600 transition-all shadow"
+          >
+            Logout
+          </button>
+        </div>
         <div className="flex-1 overflow-y-auto">
           <AnimatePresence mode="wait">
             {!currentConversation ? (
