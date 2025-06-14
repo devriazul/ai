@@ -14,6 +14,11 @@ export function saveConversations(conversations: Conversation[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(conversations));
 }
 
+export function clearConversations() {
+  if (typeof window === 'undefined') return;
+  localStorage.removeItem(STORAGE_KEY);
+}
+
 export function createNewConversation(firstMessage: Message): Conversation {
   const conversation: Conversation = {
     id: uuidv4(),

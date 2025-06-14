@@ -17,12 +17,39 @@ export async function POST(req: Request) {
       );
     }
 
+    const lastMessage = messages[messages.length - 1].content.toLowerCase();
+
+    // Check for any identity-related questions
+    if (lastMessage.includes('who are you') || 
+        lastMessage.includes('what are you') || 
+        lastMessage.includes('tell me about yourself') ||
+        lastMessage.includes('introduce yourself') ||
+        lastMessage.includes('what is your name') ||
+        lastMessage.includes('what should i call you') ||
+        lastMessage === 'who?' ||
+        lastMessage === 'you') {
+      return NextResponse.json({ 
+        message: "I'm an AI created by OpenAI, designed to assist with a wide range of information and services." 
+      });
+    }
+
+    console.log('API Key available:', !!process.env.OPENAI_API_KEY);
+    console.log('Using model: gpt-4-turbo-preview');
+    console.log('Messages:', messages);
+    
     const completion = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4-turbo-preview',
       messages: messages.map((message: Message) => ({
         role: message.role,
         content: message.content,
       })),
+    });
+
+    console.log('API Response:', {
+      model: completion.model,
+      usage: completion.usage,
+      finish_reason: completion.choices[0]?.finish_reason,
+      content_length: completion.choices[0]?.message?.content?.length
     });
 
     const responseMessage = completion.choices[0]?.message?.content;

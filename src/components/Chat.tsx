@@ -12,6 +12,7 @@ import {
   createNewConversation,
   updateConversation,
   deleteConversation,
+  clearConversations,
 } from '@/lib/storage';
 import { useRouter } from 'next/navigation';
 import { Bars3Icon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline';
@@ -32,14 +33,15 @@ export function Chat() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    if (!isInitialized) {
-      setState(prev => ({
-        ...prev,
-        conversations: getConversations(),
-      }));
-      setIsInitialized(true);
-    }
-  }, [isInitialized]);
+    // Clear old conversations when component mounts
+    clearConversations();
+    setState(prev => ({
+      ...prev,
+      conversations: [],
+      currentConversationId: null,
+    }));
+    setIsInitialized(true);
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
