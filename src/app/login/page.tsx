@@ -81,18 +81,24 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setError("");
-    const res = await fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await res.json();
-    setLoading(false);
-    if (data.success) {
-      localStorage.setItem("isLoggedIn", "true");
-      router.replace("/");
-    } else {
-      setError("Invalid email or password");
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        localStorage.setItem("isLoggedIn", "true");
+        router.replace("/");
+      } else {
+        setError(data.error || "Invalid email or password");
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setError("Failed to connect to the server. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 

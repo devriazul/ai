@@ -6,5 +6,26 @@ const DEFAULT_USER: User = {
 };
 
 export function authenticate(email: string, password: string): boolean {
-  return email === DEFAULT_USER.email && password === DEFAULT_USER.password;
+  // Log authentication attempt (without sensitive data)
+  console.log('Authentication attempt:', {
+    hasEmail: !!email,
+    hasPassword: !!password,
+    hasExpectedEmail: !!DEFAULT_USER.email,
+    hasExpectedPassword: !!DEFAULT_USER.password
+  });
+
+  // Check if environment variables are set
+  if (!DEFAULT_USER.email || !DEFAULT_USER.password) {
+    console.error('Missing environment variables for authentication');
+    return false;
+  }
+
+  // Check if provided credentials match
+  const isValid = email === DEFAULT_USER.email && password === DEFAULT_USER.password;
+  
+  if (!isValid) {
+    console.log('Authentication failed - credentials do not match');
+  }
+
+  return isValid;
 } 
